@@ -16,7 +16,7 @@ from scipy import signal
 from scipy.fft import fft, fftfreq
 
 
-def read_data(file_path: str, list_number: int, start_time=0, end_time=100, skiprows_number=4, comments='#'):
+def read_data(file_path: str, list_number: int, start_time=0, end_time=0, skiprows_number=4, comments='#'):
     '''
     数据文本文件，并返回时间和所需数据
 
@@ -35,7 +35,10 @@ def read_data(file_path: str, list_number: int, start_time=0, end_time=100, skip
 
     # 筛选出大于等于起始时间的数据
     data = data[data[:, 0] >= start_time]
-    data = data[data[:, 0] <= end_time]
+
+    # 只有在end_time不为0的时候设置结束时间
+    if end_time is not 0:
+        data = data[data[:, 0] <= end_time]
 
     # 提取时间列和所需数据列
     time = data[:, 0]  # 一般的文件结构中时间都位于第一列
